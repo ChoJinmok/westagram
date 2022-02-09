@@ -8,8 +8,8 @@ const visiblePassword = document.getElementById('visible-password');
 const passwordDiv = document.getElementsByClassName('password-input')[0];
 const loginBtn = document.querySelector("#login-btn");
 
-function activateBtn() {
-    if(passwordInput.value.length > 5 && nameInput.value.length > 0) {
+function activateBtn(passwordInputValueLength, nameInputValueLength = 1) {
+    if(passwordInputValueLength > 5 && nameInputValueLength > 0) {
         loginBtn.style.backgroundColor = '#0095F6';
         loginBtn.style.cursor = "pointer";
     } else {
@@ -41,14 +41,14 @@ function eraseInput(input, placeholder) {
 function keypressNameInput(e) {
     if(e.code !== "Enter"){
         keypressInput(nameInput, namePlaceholder);
-        activateBtn();
+        activateBtn(passwordInput.value.length);
     }
 }
 
 function earaseNameInput() {
     if(nameInput.value === '') {
         eraseInput(nameInput, namePlaceholder);
-        activateBtn();
+        activateBtn(passwordInput.value.length, nameInput.value.length);
     }
 }
 
@@ -56,7 +56,7 @@ function keypressPasswordInput(e) {
     if(e.code !== "Enter"){
         keypressInput(passwordInput, passwordPlaceholder);
         visualizePassword();
-        activateBtn();
+        activateBtn(passwordInput.value.length, nameInput.value.length);
         passwordInput.style.width = String(passwordDiv.offsetWidth - visiblePassword.offsetWidth-30)+'px';
     }
 }
@@ -66,7 +66,7 @@ function earasePasswordInput() {
         eraseInput(passwordInput, passwordPlaceholder);
         visiblePassword.innerHTML = "";
     }
-    activateBtn();
+    activateBtn(passwordInput.value.length, nameInput.value.length);
 }
 
 
