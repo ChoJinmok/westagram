@@ -12,11 +12,17 @@ function activateBtn(passwordInputValueLength, nameInputValueLength = 1) {
     if(passwordInputValueLength > 5 && nameInputValueLength > 0) {
         loginBtn.style.backgroundColor = '#0095F6';
         loginBtn.style.cursor = "pointer";
+        loginBtn.removeAttribute('disabled');
     } else {
         loginBtn.style.backgroundColor = '#c5e0fc';
         loginBtn.style.cursor = "default";
+        loginBtn.setAttribute('disabled', true);
     }
 }
+
+// function activateBtn_2(passwordInputValueLength, nameInputValueLength = 1) {
+//     (passwordInputValueLength > 5 && nameInputValueLength > 0) ? loginBtn.style.backgroundColor = '#0095F6' : loginBtn.style.backgroundColor = '#c5e0fc'
+// }
 
 function visualizePassword() {
     if (passwordInput.type === 'password'){
@@ -69,11 +75,25 @@ function earasePasswordInput() {
     activateBtn(passwordInput.value.length, nameInput.value.length);
 }
 
-
 nameInput.addEventListener('keyup', earaseNameInput);
 nameInput.addEventListener('keypress', keypressNameInput);
+nameInput.addEventListener('input', keypressNameInput);
 passwordInput.addEventListener('keyup', earasePasswordInput);
 passwordInput.addEventListener('keypress', keypressPasswordInput);
+passwordInput.addEventListener('input', keypressPasswordInput);
+
+loginBtn.addEventListener('click', () => {
+    if (loginBtn.disabled === false) {
+        document.getElementById('loginForm').reset();
+    }
+})
+
+const loginForm = document.getElementById('loginForm');
+function handleForm(event) {
+    event.preventDefault();
+}
+loginForm.addEventListener('submit', handleForm);
+
 
 visiblePassword.addEventListener('click', () => {
     if (passwordInput.type === 'password'){
